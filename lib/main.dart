@@ -5,6 +5,7 @@ import 'package:flutter_testing_study/models/models.dart';
 
 
 import 'services/services.dart';
+import 'ui/main_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,49 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Fetch Data Example'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  late final Future<Album> futureAlbum;
-  @override
-  void initState() {
-    super.initState();
-    futureAlbum = AlbumsService().fetchAlbum(http.Client());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: FutureBuilder<Album>(
-          future: futureAlbum,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Text(snapshot.data!.title);
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            }
-
-            return const CircularProgressIndicator();
-          },
-        ),
-      ),
+      home: const MainPage(title: 'Fetch Data Example'),
     );
   }
 }
